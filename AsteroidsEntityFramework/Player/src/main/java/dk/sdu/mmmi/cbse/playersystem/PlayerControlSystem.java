@@ -1,6 +1,6 @@
 package dk.sdu.mmmi.cbse.playersystem;
 
-import dk.sdu.mmmi.cbse.common.bullet.BulletSPI;
+import dk.sdu.mmmi.cbse.bullet.BulletControlSystem;
 import dk.sdu.mmmi.cbse.common.data.Entity;
 import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.util.SPILocator;
@@ -37,9 +37,8 @@ public class PlayerControlSystem implements IEntityProcessingService {
             movingPart.setUp(gameData.getKeys().isDown(UP));
 
             if (gameData.getKeys().isDown(GameKeys.SPACE)) {
-                for (BulletSPI bullet : SPILocator.locateAll(BulletSPI.class)) {
-                    world.addEntity(bullet.createBullet(player, gameData));
-                }
+                BulletControlSystem bulletController = new BulletControlSystem();
+                world.addEntity(bulletController.createBullet(player, gameData));
             }
             
             movingPart.process(gameData, player);
