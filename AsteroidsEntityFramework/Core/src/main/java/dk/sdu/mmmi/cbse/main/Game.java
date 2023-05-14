@@ -10,6 +10,7 @@ import dk.sdu.mmmi.cbse.common.data.GameData;
 import dk.sdu.mmmi.cbse.common.data.World;
 import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
+import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.enemysystem.EnemyControlSystem;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
 import dk.sdu.mmmi.cbse.playersystem.PlayerControlSystem;
@@ -19,6 +20,7 @@ import dk.sdu.mmmi.cbse.bullet.BulletControlSystem;
 import dk.sdu.mmmi.cbse.bullet.BulletPlugin;
 import dk.sdu.mmmi.cbse.asteroid.AsteroidPlugin;
 import dk.sdu.mmmi.cbse.asteroid.AsteroidProcessor;
+import dk.sdu.mmmi.cbse.collisionsystem.CollisionDetector;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class Game
 
     private final GameData gameData = new GameData();
     private List<IEntityProcessingService> entityProcessors = new ArrayList<>();
+
+    private List<IPostEntityProcessingService> postEntityProcessors = new ArrayList<>();
     private List<IGamePluginService> entityPlugins = new ArrayList<>();
     private World world = new World();
 
@@ -73,6 +77,11 @@ public class Game
         entityPlugins.add(asteroidPlugin);
         entityProcessors.add(asteroidProcess);
 
+        //collision
+        IPostEntityProcessingService collisionProcess = new CollisionDetector();
+        postEntityProcessors.add(collisionProcess);
+
+
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : entityPlugins) {
             iGamePlugin.start(gameData, world);
@@ -100,6 +109,12 @@ public class Game
         for (IEntityProcessingService entityProcessorService : entityProcessors) {
             entityProcessorService.process(gameData, world);
         }
+
+        for (IPostEntityProcessingService postEntityProcessingService: postEntityProcessors){
+            postEntityProcessingService.process(gameData, world);
+        }
+
+
     }
 
     private void draw() {
