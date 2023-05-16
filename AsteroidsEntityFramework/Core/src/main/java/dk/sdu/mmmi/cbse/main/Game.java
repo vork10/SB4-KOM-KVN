@@ -53,35 +53,6 @@ public class Game
                 new GameInputProcessor(gameData)
         );
 
-        //player
-        IGamePluginService playerPlugin = new PlayerPlugin();
-        IEntityProcessingService playerProcess = new PlayerControlSystem();
-        entityPlugins.add(playerPlugin);
-        entityProcessors.add(playerProcess);
-
-        //enemy
-        IGamePluginService enemyPlugin = new EnemyPlugin();
-        IEntityProcessingService enemyProcess = new EnemyControlSystem();
-        entityPlugins.add(enemyPlugin);
-        entityProcessors.add(enemyProcess);
-
-        //bullet
-        IGamePluginService bulletPlugin = new BulletPlugin();
-        IEntityProcessingService bulletProcess = new BulletControlSystem();
-        entityPlugins.add(bulletPlugin);
-        entityProcessors.add(bulletProcess);
-
-        //asteroid
-        IGamePluginService asteroidPlugin = new AsteroidPlugin();
-        IEntityProcessingService asteroidProcess = new AsteroidProcessor();
-        entityPlugins.add(asteroidPlugin);
-        entityProcessors.add(asteroidProcess);
-
-        //collision
-        IPostEntityProcessingService collisionProcess = new CollisionDetector();
-        postEntityProcessors.add(collisionProcess);
-
-
         // Lookup all Game Plugins using ServiceLoader
         for (IGamePluginService iGamePlugin : entityPlugins) {
             iGamePlugin.start(gameData, world);
