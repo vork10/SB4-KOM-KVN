@@ -14,8 +14,9 @@ import static java.lang.Math.sin;
  *
  * @author corfixen
  */
-public class AsteroidSplitterImpl{
+public class AsteroidSplitterImpl implements IAsteroidSplitter {
 
+    @Override
     public void createSplitAsteroid(Entity e, World world) {
         PositionPart otherPos = e.getPart(PositionPart.class);
         LifePart otherLife = e.getPart(LifePart.class);

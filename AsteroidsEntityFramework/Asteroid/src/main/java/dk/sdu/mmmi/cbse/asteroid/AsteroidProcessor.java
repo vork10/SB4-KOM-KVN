@@ -12,7 +12,7 @@ import dk.sdu.mmmi.cbse.common.services.IEntityProcessingService;
 
 public class AsteroidProcessor implements IEntityProcessingService {
 
-    private AsteroidSplitterImpl asteroidSplitter = new AsteroidSplitterImpl();
+    private IAsteroidSplitter asteroidSplitter = new AsteroidSplitterImpl();
 
     @Override
     public void process(GameData gameData, World world) {
@@ -49,11 +49,11 @@ public class AsteroidProcessor implements IEntityProcessingService {
     /**
      * Dependency Injection using OSGi Declarative Services
      */
-    public void setAsteroidSplitter(AsteroidSplitterImpl asteroidSplitter) {
+    public void setAsteroidSplitter(IAsteroidSplitter asteroidSplitter) {
         this.asteroidSplitter = asteroidSplitter;
     }
 
-    public void removeAsteroidSplitter(AsteroidSplitterImpl asteroidSplitter) {
+    public void removeAsteroidSplitter(IAsteroidSplitter asteroidSplitter) {
         this.asteroidSplitter = null;
     }
 
