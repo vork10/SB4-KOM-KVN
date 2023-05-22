@@ -13,6 +13,8 @@ import dk.sdu.mmmi.cbse.common.services.IGamePluginService;
 import dk.sdu.mmmi.cbse.common.services.IPostEntityProcessingService;
 import dk.sdu.mmmi.cbse.common.util.SPILocator;
 import dk.sdu.mmmi.cbse.managers.GameInputProcessor;
+import org.springframework.stereotype.Component;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -23,11 +25,14 @@ public class Game
 
     private static OrthographicCamera cam;
     private ShapeRenderer sr;
-
+    private AnnotationConfigApplicationContext components;
     private final GameData gameData = new GameData();
     private List<IEntityProcessingService> entityProcessors = new ArrayList<>();
     private List<IPostEntityProcessingService> postEntityProcessors = new ArrayList<>();
     private World world = new World();
+
+
+
 
     @Override
     public void create() {
